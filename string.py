@@ -27,7 +27,7 @@ def slidingWindowMin(s:list, w:int):
 
 
 
-
+# Substring problems template (anything given a string and pattern)
 '''str = ADOBECODEBANC, T = abc'''
 def minWindowSubstring(s:str, pat:str):
     c = Counter(pat)
@@ -94,11 +94,12 @@ def areSentencesSimilar(words1, words2, pairs):
 
     similar_words = {}
 
-    def dfs(word, root_word):
+    # dfs to make every word correspond to the same root words
+    def dfs(word, root_word): # if it's already been added with a root word, do nothing
         if word in similar_words:
             return
         similar_words[word] = root_word
-        for synonym in words[word]:
+        for synonym in words[word]: # make all synonyms in dict use the same root word
             dfs(synonym, root_word)
 
     # Assign root words.
@@ -172,6 +173,7 @@ def findLongestWord(self, s, d):
         it = iter(s)
         return all(c in it for c in x)
     return min(filter(isSubsequence, d) + [''], key=lambda x: (-len(x), x))
+
 
 '''
 abbrev
