@@ -12,7 +12,7 @@ class unionfind:
     def root(self,i):
         while i != self.parent[i]:
             self.parent[i] = self.parent[self.parent[i]] # path compression
-            i = self.id[i]
+            i = self.parent[i]
         return i
 
     def union(self, p,q):

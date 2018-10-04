@@ -56,3 +56,34 @@ class Solution:
         :rtype: List[int]
         """
         return [key for key,val in Counter(nums).most_common(k)]
+
+# Kth largest element
+"""
+Find the length of the longest increasing subarray in a list  
+
+Find the length of the longest increasing subsequence (with gaps allowed) in a list  
+
+Create Deep copy of linked list with random pointer
+
+Given two sorted arrays, write a function to find the kth smallest element among both the arrays. 
+(This was required to be solved in constant space without using any additional data structures).  (2018)
+
+Three sum problem. Given an array of numbers, write a function to find groups of all three numbers such that their sum is 0. 
+The numbers can be repeated.
+
+needle haystack
+
+Given a decimal number, find the number of 1s in its binary representation? 
+Follow up: Can u solve this in O(1) run time and O(1) space.  
+
+Find the minimum distance to a leaf node in a binary tree  
+binary search, String, KNN, plus two binary number in String, next permutation  (2018)
+
+Given a 2D array of gifts, find path from top left to bottom right corner with greatest aggregated gift values.  
+"""
+
+
+'''
+IBM: linked list reverse, double linked list implementation.
+OOP Testing
+'''
