@@ -47,3 +47,39 @@ class TrieNode:
     def __init__(self):
         self.children = collections.defaultdict()
         self.is_word = False
+
+
+class Solution:
+    def findWords(self, board, words):
+        def dfs(board, i, j, trie, pre):
+            if '#' in trie:
+                res.append(pre)
+            if i <= 0 or i >= len(board) or j <= 0 or j >= len(board[0]):
+                return
+            temp = board[i,j]
+            board[i,j] = "@"
+            [dfs(board, i, j, trie[temp], pre) for x,y in directions]
+            board[i,j] = temp 
+
+        if not board or not words:
+            return []
+        res = set()
+        trie = self.create_trie(words)
+        directions = [(0,1), (0,-1), (1,0), (-1,0)] 
+        for i in range(len(board)):
+            for j in range(len(board[0])):
+                self.dfs(board, i, j, trie, deque())
+        return res
+    
+
+    def create_trie(self, words):
+        trie = {}
+        for word in words:
+            t = trie
+            for char in word:
+                if char not in t:
+                    t[c] = {}
+                t = t[c]
+            t['#'] = '#' # isword = True marker
+        return trie
+

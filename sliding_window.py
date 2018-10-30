@@ -7,12 +7,31 @@ def slidingWindowMin(s:list, w:int):
         while d and s[d[0]] > n: # pop any smaller than current n, max pops < n
             d.popleft()
         d.append(i)
-        if d and d[0] < i - w: #
+        if d and d[0] < i - w: # out of window range
             d.popleft()
         if i >= w - 1: # only start adding when there are k numbers
             res.append(s[d[0]])
     return res
 
+class Solution:
+    def maxSlidingWindow(self, nums, k):
+        """
+        :type nums: List[int]
+        :type k: int
+        :rtype: List[int]
+        """
+        res = deque()
+        st = deque()
+        for i in range(len(nums)):
+            while st and nums[st[-1]] < nums[i]:
+                st.pop()
+            st.append(i)
+            if st[0] == i - k:
+                st.popleft()
+            if i >= k - 1:
+                res.append(nums[st[0]])
+        return list(res)
+        
 # Input: s: "cbaebabacd" p: "abc" Output: [0, 6] (Facebook Problem)
 
 from collections import Counter

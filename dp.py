@@ -13,6 +13,41 @@ def knapsack(values:int, weight: int, W:int):
                 dp[i][w] = max(values[i-1][w-weight[i-1]], dp[i-1][w])
     return dp[len(values)][W]
 
+# can't rob adjacent houses but the house is circular, so house 0 is next to house n-1
+# [1,2,3,1] = 4, [2,3,2] = 3 since you can't rob house 0 and house 2 at once. 
+# Solution: House robber twice: once from 0 to n - 2 (excluding last) and 1 to n - 1 (excluding first)
+def houseRobber2(nums):
+    if not nums:
+        return 0
+    if len(nums) == 1:
+        return nums[0]
+    def helper(nums):
+        now = last = 0
+        for i in range(len(nums)):
+            now, last = max(nums[i]+last, now), now
+        return max(now,last)
+    return max(helper(nums[1:]), helper(nums[:-1]))
+
+# In each operation, you pick any nums[i] and delete it to earn nums[i] points. 
+# After, you must delete every element equal to nums[i] - 1 or nums[i] + 1.
+# what's max point
+# solution: count numbers in an array size max_num, then do house robber
+def deleteAndEarn(nums):
+        """
+        :type nums: List[int]
+        :rtype: int
+        """
+        if not nums: return 0
+        c = [0]*max(nums)
+        for num in nums:
+            c[num-1]+=num
+        return rob(c)
+def rob(nums):
+    now = last = 0
+    for i in range(len(nums)):
+        now, last = max(last+nums[i], now), now
+    return now
+        
 
 def shortestDistanceFromAllBuildings(grid):
     '''
