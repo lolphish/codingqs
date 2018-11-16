@@ -1,3 +1,9 @@
+# class TreeNode(object):
+#     def __init__(self, x):
+#         self.val = x
+#         self.left = None
+#         self.right = None
+
 # recursive valid BST
 class Solution(object):
     def isValidBST(self, root, lessThan = float('inf'), largerThan = float('-inf')):
@@ -51,3 +57,17 @@ class Solution:
             pre = root
             root = root.right
         return True
+
+
+# check if tree t is a subtree of s
+def isSubtree(s, t):
+    if not s: return False
+    if isSame(s,t): return True
+    return isSubtree(s.left, t) or isSubtree(s.right, t)
+
+def isSame(s, t):
+    if not s and not t:
+        return True
+    if not s or not t:
+        return False
+    return s.val == t.val and isSame(s.left, t.left) and isSame(s.right, t.right)

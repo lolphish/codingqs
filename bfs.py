@@ -42,34 +42,33 @@ class Solution(object):
                 if counter == -1:
                     return False
         return counter == 0
-
-    # backtracking problem permutations
-    class Solution:
-        def permute(self, nums):
+# beginWord = "hit", endWord = "cog", wordList = ["hot","dot","dog","lot","log","cog"] only change 1 letter at time (bidirect BFS)
+class Solution(object):
+    def ladderLength(self, beginWord, endWord, wordList):
         """
-        :type nums: List[int]
-        :rtype: List[List[int]]
+        :type beginWord: str
+        :type endWord: str
+        :type wordList: List[str]
+        :rtype: int
         """
-        res, used = [], [False]*len(nums)
-        # sort(nums) if there are duplicate numbers
-        def backtrack(cur):
-            if len(cur) == len(nums):
-                res.append([n for n in cur])
-            else:
-                for i in range(len(nums)):
-                    if used[i]: # if used[i] or (i > 0 and nums[i] == nums[i-1] and not used[i-1])
-                        continue
-                        used[i] = True
-                        cur.append(nums[i])
-                        
-                        backtrack(cur)
-                        
-                        cur.pop()
-                        used[i] = False
+        if endWord not in wordList: return 0
+        front, back, length = set(), set(), 2
+        front.add(beginWord)
+        back.add(endWord)
+        wordDict = set(wordList)
+        wordDict.discard(beginWord) # remove front word
+        while front:
+            posWords =  set([word[:i] + char + word[i+1:] for word in front for i in range(len(beginWord)) for char in string.ascii_lowercase]) # generate all words
+            front = posWords & wordDict # check if the posWords are in wordList by set intersection
+            if front & back:
+                return length # if there's any intersection there's a match
+            length += 1
+            if len(front) > len(back):
+                front, back = back,front # switch to the other side of bfs if smaller and repeat
+            wordDict -= front # to remove cycles
             
-                    
-        backtrack([])
-        return res
+        return 0
+        
 
 # Nested Weighted List Sum
 # Input: [1,[4,[6]]] Output: 27. 1 in depth 1 + 4*depth2 + 6*depth3
@@ -119,3 +118,59 @@ def depthSumInverse(self, nestedList):
         res+=unweighted
         nestedList = tmpList
     return res
+
+# zig zag traversal: print each level from left->right, then right->left alternatingly. Sol: use a flag
+def zigzagLevelOrder(self, root):
+    """
+    :type root: TreeNode
+    :rtype: List[List[int]]
+    """
+    if not root: return []
+    queue, res, flag = deque(), deque(), False
+    queue.append(root)
+    while queue:
+        next = []
+        for _ in range(len(queue)):
+            node = queue.popleft()
+            if flag:
+                next.insert(0, node.val)
+            else:
+                next.append(node.val)
+    
+            if node.left: queue.append(node.left)
+            if node.right: queue.append(node.right)
+
+        res.append(next)
+        flag = not flag
+    return list(res)
+
+
+def tiltMaze(maze, sx, sy, dx, dy):
+    M, N = len(maze), len(maze[0])
+    visited = [[False]*N for _ in range(M)]
+    queue = deque()
+    queue.appendleft((sx, sy))
+    directions = [(-1, 0), (1,0), (0,-1), (0,1)]
+    depth = 0
+    while queue:
+        point = queue.pop()
+        
+        if point[0] == dx and point[1] == dy:
+            return depth
+        depth+=1
+        for d in directions:
+            new_point = (point[0]+d[0], point[1]+d[1])
+            if not (0 <= new_point[0] < M and 0 <= new_point[1] < N) or maze[new_point[0]][new_point[1]] == 1 or visited[new_point[0]][new_point[1]]:
+                continue
+                
+            while 0 <= new_point[0]+d[0] < M and 0 <= new_point[1]+d[1] < N and maze[new_point[0]+d[0]][new_point[1]+d[1]] == 0:
+                new_point = (new_point[0]+d[0], new_point[1]+d[1])
+            
+            if not visited[new_point[0]][new_point[1]]:
+                visited[new_point[0]][new_point[1]] = True
+                queue.appendleft(new_point)
+    return -1
+    
+
+maze = [ [0, 0, 0, 1, 0], [0, 0, 0, 1, 0], [0, 0, 1, 1, 0], [0, 0, 0, 1, 0]]
+print(tiltMaze(maze, 0, 4, 4, 4))

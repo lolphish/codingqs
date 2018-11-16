@@ -45,27 +45,14 @@ def merge(self, intervals):
             out += i,
     return out
 
-# trapping rain water
-class Solution(object):
-    def trap(self, height):
-        """
-        :type height: List[int]
-        :rtype: int
-        """
-        leftCursor, rightCursor = 0, len(height) - 1
-        leftMax, rightMax, storedWater = 0, 0, 0
-
-        while (leftCursor <= rightCursor):
-            leftMax = max(leftMax, height[leftCursor])
-            rightMax = max(rightMax, height[rightCursor])
-            if leftMax < rightMax:
-                storedWater += leftMax - height[leftCursor]
-                leftCursor += 1
-            else:
-                storedWater += rightMax - height[rightCursor]
-                rightCursor -= 1
-
-        return storedWater
+# maximum subarray Input: [-2,1,-3,4,-1,2,1,-5,4], Output: 6, Explanation: [4,-1,2,1] has the largest sum = 6.
+def maxSubArray(self, nums):
+    if not nums: return 0
+    maxSoFar = maxHere = nums[0]
+    for i in range(1, len(nums)):
+        maxHere = max(nums[i], maxHere+nums[i])
+        maxSoFar = max(maxSoFar, maxHere)
+    return maxSoFar
 
 # maximum product
 class Solution(object):

@@ -13,6 +13,16 @@ def knapsack(values:int, weight: int, W:int):
                 dp[i][w] = max(values[i-1][w-weight[i-1]], dp[i-1][w])
     return dp[len(values)][W]
 
+# coin change problem
+def change(self, amount, coins):
+    dp = [0]*(amount+1)
+    dp[0] = 1
+    for coin in coins:
+        for i in range(1, amount+1):
+            if i >= coin:
+                dp[i] += dp[i-coin]
+    return dp[-1]
+
 # can't rob adjacent houses but the house is circular, so house 0 is next to house n-1
 # [1,2,3,1] = 4, [2,3,2] = 3 since you can't rob house 0 and house 2 at once. 
 # Solution: House robber twice: once from 0 to n - 2 (excluding last) and 1 to n - 1 (excluding first)
