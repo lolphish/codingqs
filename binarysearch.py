@@ -38,3 +38,6 @@ def twoSum(self, numbers, target):
                 l = mid+1
             else:
                 r = mid-1
+
+# Intersection of two sorted arrays
+def interesectionArrays()

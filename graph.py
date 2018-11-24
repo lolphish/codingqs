@@ -3,6 +3,20 @@ from edge import edge
 def addEdge(graph, from_node:int, to_node:int, cost:int):
     graph[from_node].append(edge( from_node, to_node, cost))
 
+# Topological Sorting
+#Use a stack. For each vertices, recursively call function to visit all neighbors and add to stack when we run out of vertices to visit. Then at the end pop from the stack.
+ def topologicalSortUtil(self,v,visited,stack):
+        # Mark the current node as visited.
+        visited[v] = True
+        # Recur for all the vertices adjacent to this vertex
+        for i in self.graph[v]:
+            if visited[i] == False:
+                self.topologicalSortUtil(i,visited,stack)
+        # Push current vertex to stack which stores result
+        stack.insert(0,v)
+ def topologicalSort(self):
+    for i in V: if visited[i] == False: topologicalSortUtil(i,visited,stack)
+
 # topological sorting
 def topSort(graph:defaultdict):
     visited = set() # add visited node into here
